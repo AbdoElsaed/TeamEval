@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write # ✅ Allow Actions to push to the repo
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
