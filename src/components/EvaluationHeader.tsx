@@ -1,10 +1,6 @@
 import { ListIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
 interface EvaluationHeaderProps {
@@ -12,17 +8,21 @@ interface EvaluationHeaderProps {
   onViewList: () => void;
 }
 
-export function EvaluationHeader({ currentStep, onViewList }: EvaluationHeaderProps) {
+export function EvaluationHeader({
+  currentStep,
+  onViewList,
+}: EvaluationHeaderProps) {
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate("/");
+    // Using hash router, so we just navigate to the root with hash
+    navigate("/?step=team-member");
   };
 
   return (
     <CardHeader className="text-center">
       <div className="flex justify-between items-center">
-        <CardTitle 
+        <CardTitle
           onClick={handleTitleClick}
           className="cursor-pointer hover:text-primary transition-colors"
         >
@@ -47,4 +47,4 @@ export function EvaluationHeader({ currentStep, onViewList }: EvaluationHeaderPr
       </CardDescription>
     </CardHeader>
   );
-} 
+}

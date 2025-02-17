@@ -2,6 +2,8 @@
 
 A modern web application for managing team member evaluations, built with React, TypeScript, and Tailwind CSS.
 
+Live Demo: [https://abdoelsaed.github.io/TeamEval](https://abdoelsaed.github.io/TeamEval)
+
 ## Features
 
 ### Evaluation Management
@@ -87,6 +89,20 @@ npm run dev
 ```
 
 The application will be available at `http://localhost:5173`
+
+### Deployment
+
+1. Build the application:
+```bash
+npm run build
+```
+
+2. Deploy to GitHub Pages:
+```bash
+npm run deploy
+```
+
+The application will be deployed to `https://abdoelsaed.github.io/TeamEval`
 
 ## Usage
 

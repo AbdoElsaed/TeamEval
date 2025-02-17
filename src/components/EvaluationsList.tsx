@@ -2,11 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Edit, Eye, Download, Upload, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,10 +22,13 @@ interface EvaluationsListProps {
 
 export function EvaluationsList({ evaluations }: EvaluationsListProps) {
   const navigate = useNavigate();
-  const [selectedEvaluation, setSelectedEvaluation] = useState<Evaluation | null>(null);
+  const [selectedEvaluation, setSelectedEvaluation] =
+    useState<Evaluation | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showClearAllDialog, setShowClearAllDialog] = useState(false);
-  const [evaluationToDelete, setEvaluationToDelete] = useState<string | null>(null);
+  const [evaluationToDelete, setEvaluationToDelete] = useState<string | null>(
+    null
+  );
 
   const handleEdit = (email: string) => {
     navigate(`/?step=behavioral&email=${email}`);
@@ -59,12 +58,17 @@ export function EvaluationsList({ evaluations }: EvaluationsListProps) {
       reader.onload = (e) => {
         try {
           const importedData = JSON.parse(e.target?.result as string);
-          if (typeof importedData === 'object' && importedData !== null) {
+          if (typeof importedData === "object" && importedData !== null) {
             const mergedEvaluations = { ...evaluations, ...importedData };
-            localStorage.setItem("evaluations", JSON.stringify(mergedEvaluations));
+            localStorage.setItem(
+              "evaluations",
+              JSON.stringify(mergedEvaluations)
+            );
             window.location.reload();
           } else {
-            alert("Invalid file format. Please import a valid evaluations JSON file.");
+            alert(
+              "Invalid file format. Please import a valid evaluations JSON file."
+            );
           }
         } catch {
           alert("Error reading file. Please make sure it's a valid JSON file.");
@@ -159,7 +163,10 @@ export function EvaluationsList({ evaluations }: EvaluationsListProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {Object.entries(evaluations).map(([email, evaluation]) => (
-          <Card key={email} className="hover:shadow-lg transition-shadow relative">
+          <Card
+            key={email}
+            className="hover:shadow-lg transition-shadow relative"
+          >
             <Button
               variant="ghost"
               size="icon"
@@ -183,7 +190,13 @@ export function EvaluationsList({ evaluations }: EvaluationsListProps) {
                 <div className="space-y-2">
                   <div className="text-sm">
                     <span className="text-gray-500">Status: </span>
-                    <span className={`font-medium ${evaluation.technical ? 'text-green-600' : 'text-blue-600'}`}>
+                    <span
+                      className={`font-medium ${
+                        evaluation.technical
+                          ? "text-green-600"
+                          : "text-blue-600"
+                      }`}
+                    >
                       {evaluation.technical ? "Complete" : "In Progress"}
                     </span>
                   </div>
@@ -230,39 +243,50 @@ export function EvaluationsList({ evaluations }: EvaluationsListProps) {
         />
       )}
 
-      <AlertDialog open={showClearAllDialog} onOpenChange={setShowClearAllDialog}>
+      <AlertDialog
+        open={showClearAllDialog}
+        onOpenChange={setShowClearAllDialog}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Clear All Evaluations</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete all evaluations.
+              This action cannot be undone. This will permanently delete all
+              evaluations.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleClearAll} className="bg-red-600 hover:bg-red-700">
+            <AlertDialogAction
+              onClick={handleClearAll}
+              className="bg-red-600 hover:bg-red-700"
+            >
               Clear All
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      <AlertDialog open={!!evaluationToDelete} onOpenChange={() => setEvaluationToDelete(null)}>
+      <AlertDialog
+        open={!!evaluationToDelete}
+        onOpenChange={() => setEvaluationToDelete(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Evaluation</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this evaluation.
+              This action cannot be undone. This will permanently delete this
+              evaluation.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={() => {
                 if (evaluationToDelete) {
                   handleDeleteEvaluation(evaluationToDelete);
                 }
-              }} 
+              }}
               className="bg-red-600 hover:bg-red-700"
             >
               Delete
