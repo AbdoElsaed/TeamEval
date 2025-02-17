@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment on push to main branch
+  pull_request:
+    branches:
+      - main # Optional: Trigger deployment on PR merge to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16" # Use the Node.js version you want
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: |
+          npm install
+
+      # Build the app
+      - name: Build the app
+        run: |
+          npm run build
+
+      # Deploy to GitHub Pages using gh-pages
+      - name: Deploy to GitHub Pages
+        run: |
+          npm install gh-pages --save-dev
+          npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is automatically created by GitHub
